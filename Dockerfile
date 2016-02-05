@@ -7,7 +7,7 @@ ADD /root/ /root/
 
 RUN \ 
 #Adding GIT and BUILD Tools AND ncurses-dev
-    apk --update add git build-base ncurses-dev\
+    apk --update add git build-base ncurses-dev lua5.2-libs lua5.2 lua5.2-posix \
 #Getting Go Tools
     && go get golang.org/x/tools/cmd/godoc \
     && go get github.com/nsf/gocode \
@@ -28,7 +28,7 @@ RUN \
     && make install \
 #CLEANUP
     && apk del build-base \
-    && rm -rf /var/cache/apk/* /tmp/* /var/tmp/* 
+    && rm -rf /var/cache/apk/* /tmp/* /var/tmp/*  /go/src/*
 
 #CONFIG VIM
 RUN \
