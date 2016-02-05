@@ -46,5 +46,6 @@ RUN \
     && git clone --depth 1 https://github.com/scrooloose/nerdcommenter.git \
     && git clone --depth 1 https://github.com/scrooloose/nerdtree.git \
     && vim +PluginInstall +qall \
+    && alias vi="vim"  \
 #CLEANUP
     && rm -rf */.git
