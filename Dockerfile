@@ -38,7 +38,7 @@ RUN \
     && make VIMRUNTIMEDIR=/usr/share/vim/vim74 \
     && make install \
 #CLEANUP
-    && apk del libtool automake autoconf build-base\
+    && apk del automake autoconf build-base\
     && rm -rf /var/cache/apk/* /tmp/* /var/tmp/*  /go/src/*
 
 #CONFIG VIM
