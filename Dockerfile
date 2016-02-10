@@ -7,7 +7,7 @@ ADD /root/ /root/
 
 RUN \ 
 #Adding GIT and BUILD Tools AND ncurses-dev
-    apk --update add git build-base ncurses-dev lua5.2-libs lua5.2 lua5.2-posix \
+    apk --update add git build-base ncurses-dev lua5.2-libs lua5.2 lua5.2-posix autoconf automake libtool  \
 #Getting Go Tools
     && go get golang.org/x/tools/cmd/godoc \
     && go get github.com/nsf/gocode \
@@ -18,6 +18,16 @@ RUN \
     && go get github.com/golang/lint/golint \
     && go get github.com/kisielk/errcheck \
     && go get github.com/jstemmer/gotags \
+    
+#Compiling Google Protobuf
+    && cd /tmp \
+    && wget https://github.com/google/protobuf/releases/download/v2.6.1/protobuf-2.6.1.tar.gz \
+    && tar xvzf protobuf-2.6.1.tar.gz \
+    && cd protobuf-2.6.1/ \
+    && ./autogen.sh \
+    && ./configure \
+    && make && make check && make install && make clean \
+    
 #Compiling VIM
     && cd /tmp \
     && git clone https://github.com/vim/vim.git \
@@ -27,7 +37,7 @@ RUN \
     && make VIMRUNTIMEDIR=/usr/share/vim/vim74 \
     && make install \
 #CLEANUP
-    && apk del build-base \
+    && apk del libtool automake autoconf build-base\
     && rm -rf /var/cache/apk/* /tmp/* /var/tmp/*  /go/src/*
 
 #CONFIG VIM
@@ -46,6 +56,5 @@ RUN \
     && git clone --depth 1 https://github.com/scrooloose/nerdcommenter.git \
     && git clone --depth 1 https://github.com/scrooloose/nerdtree.git \
     && vim +PluginInstall +qall \
-    && alias vi="vim"  \
 #CLEANUP
     && rm -rf */.git
