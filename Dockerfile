@@ -18,6 +18,7 @@ RUN \
     && go get github.com/golang/lint/golint \
     && go get github.com/kisielk/errcheck \
     && go get github.com/jstemmer/gotags \
+    && go get -u github.com/golang/protobuf/protoc-gen-go \
     
 #Compiling Google Protobuf
     && cd /tmp \
