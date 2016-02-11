@@ -22,9 +22,9 @@ RUN \
     
 #Compiling Google Protobuf
     && cd /tmp \
-    && wget https://github.com/google/protobuf/releases/download/v2.6.1/protobuf-2.6.1.tar.gz \
-    && tar xvzf protobuf-2.6.1.tar.gz \
-    && cd protobuf-2.6.1/ \
+    && wget https://github.com/google/protobuf/releases/download/v3.0.0-beta-2/protobuf-cpp-3.0.0-beta-2.tar.gz \
+    && tar xvzf protobuf-cpp-3.0.0-beta-2.tar.gz  \
+    && cd protobuf-cpp-3.0.0-beta-2/ \
     && ./autogen.sh \
     && ./configure \
     && make && make check && make install && make clean \
