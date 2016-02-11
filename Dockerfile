@@ -24,7 +24,7 @@ RUN \
     && cd /tmp \
     && wget https://github.com/google/protobuf/releases/download/v3.0.0-beta-2/protobuf-cpp-3.0.0-beta-2.tar.gz \
     && tar xvzf protobuf-cpp-3.0.0-beta-2.tar.gz  \
-    && cd protobuf-cpp-3.0.0-beta-2/ \
+    && cd protobuf-3.0.0-beta-2/ \
     && ./autogen.sh \
     && ./configure \
     && make && make check && make install && make clean \
