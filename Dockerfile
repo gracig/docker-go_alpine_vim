@@ -2,7 +2,7 @@ FROM golang:alpine
 MAINTAINER Gerson Graciani
 
 #Copies .vimrc to root
-ADD /root/ /root/
+ADD root/ /root/
 
 
 RUN \ 
