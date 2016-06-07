@@ -37,8 +37,10 @@ RUN \
           --enable-gui=no --without-x --prefix=/usr \
     && make VIMRUNTIMEDIR=/usr/share/vim/vim74 \
     && make install \
+	&& cp /usr/bin/vim /usr/bin/vi \
+
 #CLEANUP
-    && apk del libtool automake autoconf build-base\
+#    && apk del libtool automake autoconf build-base\
     && rm -rf /var/cache/apk/* /tmp/* /var/tmp/*  /go/src/*
 
 #CONFIG VIM

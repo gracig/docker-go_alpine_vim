@@ -93,6 +93,9 @@ nmap <F8> :TagbarToggle<CR>
 nmap <C-Left> :tabprevious<CR>
 nmap <C-Right> :tabnext<CR>
 
+" Maps the <Leader> key to ,
+let mapleader=","
+
 " show a list of interfaces which is implemented by the type under your cursor
 au FileType go nmap <Leader>s <Plug>(go-implements)
 " show type info for the word under your cursor
