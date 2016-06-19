@@ -7,7 +7,7 @@ ADD root/ /root/
 
 RUN \ 
 #Adding GIT and BUILD Tools AND ncurses-dev
-    apk --update add git build-base ncurses-dev lua5.2-dev lua5.2-libs lua5.2 lua5.2-posix autoconf automake libtool libstdc++ \
+    apk --update add --no-cache --virtual=build-dependencies wget ca-certificates git build-base ncurses-dev lua5.2-dev lua5.2-libs lua5.2 lua5.2-posix autoconf automake libtool libstdc++ \
 #Getting Go Tools
     && go get golang.org/x/tools/cmd/godoc \
     && go get github.com/nsf/gocode \
@@ -30,11 +30,14 @@ RUN \
     && make && make check && make install && make clean \
     
 #Compiling VIM
+	#Helps configure find lua headers and libraries
 	&& ln -s /usr/include/lua5.2 /usr/include/lua \
 	&& ln -s /usr/lib/lua5.2/liblua-5.2.so.0 /usr/lib/liblua.so.0 \
 	&& ln -s /usr/lib/lua5.2/liblua-5.2.so.0.0.0 /usr/lib/liblua.so.0.0.0 \
+	#Downloads vim
     && cd /tmp \
     && git clone https://github.com/vim/vim.git \
+	#Compiles vim with lua support
     && cd vim \
     && ./configure --with-features=huge --enable-luainterp=dynamic --enable-gui=no --without-x --prefix=/usr \
     && make VIMRUNTIMEDIR=/usr/share/vim/vim74 \
@@ -42,12 +45,11 @@ RUN \
 	&& cp /usr/bin/vim /usr/bin/vi \
 
 #CLEANUP
-#    && apk del libtool automake autoconf build-base\
-    && rm -rf /var/cache/apk/* /tmp/* /var/tmp/*  /go/src/*
+    && apk del libtool automake autoconf build-base \
+    && rm -rf /var/cache/apk/* /tmp/* /var/tmp/*  /go/src/* \
 
 #CONFIG VIM
-RUN \
-    mkdir -p /root/.vim/bundle \
+    && mkdir -p /root/.vim/bundle \
     && cd /root/.vim/bundle \
     && git clone --depth 1 https://github.com/gmarik/Vundle.vim.git \
     && git clone --depth 1 https://github.com/fatih/vim-go.git \
@@ -61,5 +63,6 @@ RUN \
     && git clone --depth 1 https://github.com/scrooloose/nerdcommenter.git \
     && git clone --depth 1 https://github.com/scrooloose/nerdtree.git \
     && vim +PluginInstall +qall \
+
 #CLEANUP
     && rm -rf */.git
