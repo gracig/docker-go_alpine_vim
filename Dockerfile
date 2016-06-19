@@ -7,7 +7,7 @@ ADD root/ /root/
 
 RUN \ 
 #Adding GIT and BUILD Tools AND ncurses-dev
-    apk --update add git build-base ncurses-dev lua5.2-libs lua5.2 lua5.2-posix autoconf automake libtool libstdc++ \
+    apk --update add git build-base ncurses-dev lua5.2-dev lua5.2-libs lua5.2 lua5.2-posix autoconf automake libtool libstdc++ \
 #Getting Go Tools
     && go get golang.org/x/tools/cmd/godoc \
     && go get github.com/nsf/gocode \
@@ -30,11 +30,13 @@ RUN \
     && make && make check && make install && make clean \
     
 #Compiling VIM
+	&& ln -s /usr/include/lua5.2 /usr/include/lua \
+	&& ln -s /usr/lib/lua5.2/liblua-5.2.so.0 /usr/lib/liblua.so.0 \
+	&& ln -s /usr/lib/lua5.2/liblua-5.2.so.0.0.0 /usr/lib/liblua.so.0.0.0 \
     && cd /tmp \
     && git clone https://github.com/vim/vim.git \
     && cd vim \
-    && ./configure --with-features=huge --enable-luainterp \
-          --enable-gui=no --without-x --prefix=/usr \
+    && ./configure --with-features=huge --enable-luainterp=dynamic --enable-gui=no --without-x --prefix=/usr \
     && make VIMRUNTIMEDIR=/usr/share/vim/vim74 \
     && make install \
 	&& cp /usr/bin/vim /usr/bin/vi \
