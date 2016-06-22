@@ -18,13 +18,14 @@ RUN \
     && go get github.com/golang/lint/golint \
     && go get github.com/kisielk/errcheck \
     && go get github.com/jstemmer/gotags \
+    && go get github.com/govend/govend \
     && go get -u github.com/golang/protobuf/protoc-gen-go \
     
 #Compiling Google Protobuf
     && cd /tmp \
-    && wget https://github.com/google/protobuf/releases/download/v3.0.0-beta-2/protobuf-cpp-3.0.0-beta-2.tar.gz \
-    && tar xvzf protobuf-cpp-3.0.0-beta-2.tar.gz  \
-    && cd protobuf-3.0.0-beta-2/ \
+	&& wget https://github.com/google/protobuf/releases/download/v3.0.0-beta-3/protobuf-cpp-3.0.0-beta-3.tar.gz \
+    && tar xvzf protobuf-cpp-3.0.0-beta-3.tar.gz  \
+    && cd protobuf-3.0.0-beta-3/ \
     && ./autogen.sh \
     && ./configure \
     && make && make check && make install && make clean \
