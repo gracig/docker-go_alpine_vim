@@ -7,9 +7,9 @@ if [ "$BASH" ]; then
 fi
 
 if [ -e /usr/share/terminfo/x/xterm-256color ]; then
-  export TERM='xterm-256color'
+  export TERM='screen-256color'
 else
-  export TERM='xterm-color'
+  export TERM='screen-color'
 fi
 
 mesg n

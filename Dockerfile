@@ -3,11 +3,12 @@ MAINTAINER Gerson Graciani
 
 #Copies .vimrc to root
 ADD root/ /root/
+ADD etc/ /etc/
 
 
 RUN \ 
 #Adding GIT and BUILD Tools AND ncurses-dev
-    apk --update add --no-cache --virtual=build-dependencies ctags wget ca-certificates git build-base ncurses-dev lua5.2-dev lua5.2-libs lua5.2 lua5.2-posix autoconf automake libtool libstdc++ \
+    apk --update add --no-cache --virtual=build-dependencies tmux irssi ctags wget ca-certificates git build-base ncurses-dev lua5.2-dev lua5.2-libs lua5.2 lua5.2-posix autoconf automake libtool libstdc++ \
 #Getting Go Tools
     && go get golang.org/x/tools/cmd/godoc \
     && go get github.com/nsf/gocode \
