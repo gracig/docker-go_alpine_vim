@@ -4,11 +4,23 @@ MAINTAINER Gerson Graciani
 #Copies .vimrc to root
 ADD root/ /root/
 ADD etc/ /etc/
-
+ 
+ENV GLIBC_VERSION=2.23-r3 
 
 RUN \ 
 #Adding GIT and BUILD Tools AND ncurses-dev
-    apk --update add --no-cache --virtual=build-dependencies tmux irssi ctags wget ca-certificates git build-base ncurses-dev lua5.2-dev lua5.2-libs lua5.2 lua5.2-posix autoconf automake libtool libstdc++ \
+    apk --update add --no-cache --virtual=build-dependencies curl tmux irssi ctags wget ca-certificates git build-base ncurses-dev lua5.2-dev lua5.2-libs lua5.2 lua5.2-posix autoconf automake libtool libstdc++ \
+
+
+ #Install glibc for alpine because golang -race depends on that
+    && for pkg in glibc-${GLIBC_VERSION} glibc-bin-${GLIBC_VERSION} glibc-i18n-${GLIBC_VERSION}; do curl -sSL https://github.com/andyshinn/alpine-pkg-glibc/releases/download/${GLIBC_VERSION}/${pkg}.apk -o /tmp/${pkg}.apk; done  \
+    && apk add --allow-untrusted /tmp/*.apk  \
+    && rm -v /tmp/*.apk  \
+    && ( /usr/glibc-compat/bin/localedef --force --inputfile POSIX --charmap UTF-8 C.UTF-8 || true )  \
+    && echo "export LANG=C.UTF-8" > /etc/profile.d/locale.sh  \
+    && /usr/glibc-compat/sbin/ldconfig /lib /usr/glibc-compat/lib  \
+    && echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf  \
+
 #Getting Go Tools
     && go get golang.org/x/tools/cmd/godoc \
     && go get github.com/nsf/gocode \
