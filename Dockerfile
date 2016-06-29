@@ -22,6 +22,12 @@ RUN \
     && echo 'hosts: files mdns4_minimal [NOTFOUND=return] dns mdns4' >> /etc/nsswitch.conf  \
 
 #Getting Go Tools
+	&& go get github.com/alecthomas/gometalinter \
+	&& go get golang.org/x/tools/cmd/guru \
+	&& go get github.com/klauspost/asmfmt/cmd/asmfmt \
+	&& go get github.com/fatih/motion \
+	&& go get github.com/zmb3/gogetdoc \
+	&& go get github.com/josharian/impl \
     && go get golang.org/x/tools/cmd/godoc \
     && go get github.com/nsf/gocode \
     && go get golang.org/x/tools/cmd/goimports \
