@@ -1,4 +1,4 @@
-FROM golang:1.7rc3-alpine
+FROM golang:1.8-alpine
 MAINTAINER Gerson Graciani
 
 #Copies .vimrc to root
