@@ -32,7 +32,6 @@ RUN \
     && go get github.com/nsf/gocode \
     && go get golang.org/x/tools/cmd/goimports \
     && go get github.com/rogpeppe/godef \
-    && go get golang.org/x/tools/cmd/oracle \
     && go get golang.org/x/tools/cmd/gorename \
     && go get github.com/golang/lint/golint \
     && go get github.com/kisielk/errcheck \
